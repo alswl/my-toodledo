@@ -73,14 +73,17 @@ function moveUp() {
             _$selectedTask = prevLevel1Row;
         }
     } else if (prevLevel1Row.length) { // prev row
-        if (prevLevel1Row.find('.subtasks').length) { // focus prev row last
-            _$selectedTask = prevLevel1Row.find('.subtasks .row').last('.row');
+        if (prevLevel1Row.find('.subtasks .row').length) { // focus prev row last
+            _$selectedTask = prevLevel1Row.find('.subtasks .row').last();
         } else {
             _$selectedTask = prevLevel1Row;
         }
     }
     unhighlightRow(lastTask);
     highlightRow(_$selectedTask);
+    if (!_$selectedTask.is(':visible')) {
+        $j('#tasks').animate({ scrollTop: $j('#tasks').scrollTop() + 20 }, 500);
+    }
 }
 
 function moveDown() {
@@ -106,8 +109,8 @@ function moveDown() {
                 _$selectedTask = nextLevel1Row;
             }
         }
-    } else if (lastTask.find('.subtasks').length) { // go into sub list
-        _$selectedTask = lastTask.find('.subtasks .row').first('.row');
+    } else if (lastTask.find('.subtasks .row').length) { // go into sub list
+        _$selectedTask = lastTask.find('.subtasks .row').first();
     } else if (nextLevel1Row.length) { // next row
         _$selectedTask = nextLevel1Row;
     } 
@@ -120,6 +123,9 @@ function moveDown() {
     //}
     unhighlightRow(lastTask);
     highlightRow(_$selectedTask);
+    if (!_$selectedTask.is(':visible')) {
+        $j('#tasks').animate({ scrollTop: $j('#tasks').scrollTop() - 20 }, 500);
+    }
 }
 
 function doneOrUndone() {
