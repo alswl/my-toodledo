@@ -47,6 +47,13 @@ function doneOrUndone() {
     btn2.click();
 }
 
+function gotoView(byWhat) {
+    //debugger
+    $j('.viewby[href="#' + byWhat + '"]').each(function(idx, elem) {
+        elem.click();
+    });
+}
+
 $j(document).ready(function() {
         
     Mousetrap.bind('0', function() { console.log(getSelectedTaskDiv()); });
@@ -55,6 +62,14 @@ $j(document).ready(function() {
 	Mousetrap.bind('k', function() { moveUp(); });
   	Mousetrap.bind('j', function() { moveDown(); });
 	Mousetrap.bind('x', function() { doneOrUndone(); });
+  	Mousetrap.bind('g c', function() { gotoView('context'); });
+  	Mousetrap.bind('g f', function() { gotoView('folder'); });
+  	Mousetrap.bind('g m', function() { gotoView('Main'); });
+
+
+  
+    
+    // --------------
 
 	Mousetrap.bind("?", function() { console.log('show shortcuts!'); });
 	Mousetrap.bind('esc', function() { console.log('escape'); }, 'keyup');
