@@ -39,7 +39,7 @@ function triggerMouseEvent (node, eventType) {
 }
 
 function initSelectedTaskDiv() {
-    if (_selectedTask === undefined) {
+    if (_selectedTask === undefined || !_selectedTask.is(':visible')) {
         _selectedTask = $j($j('.row')[0]);
     }
     _selectedTask.css({'background-color': '#e6e6e6'});
@@ -112,8 +112,8 @@ $j(document).ready(function() {
     });
 
     // move
-    Mousetrap.bind('k', function() { moveUp(); });
-    Mousetrap.bind('j', function() { moveDown(); });
+    Mousetrap.bind('k', function() { initSelectedTaskDiv(); moveUp(); });
+    Mousetrap.bind('j', function() { initSelectedTaskDiv(); moveDown(); });
 
     // action
     initTaskAction();
@@ -122,10 +122,10 @@ $j(document).ready(function() {
     Mousetrap.bind('c', function() { dropdownContext($j(_selectedTask)); });
 
     // navigate
-    Mousetrap.bind('g c', function() { gotoView('context'); });
-    Mousetrap.bind('g f', function() { gotoView('folder'); });
-    Mousetrap.bind('g m', function() { gotoView('Main'); });
-    Mousetrap.bind('g s', function() { gotoView('search'); });
+    Mousetrap.bind('g c', function() { initSelectedTaskDiv(); gotoView('context'); });
+    Mousetrap.bind('g f', function() { initSelectedTaskDiv(); gotoView('folder'); });
+    Mousetrap.bind('g m', function() { initSelectedTaskDiv(); gotoView('Main'); });
+    Mousetrap.bind('g s', function() { initSelectedTaskDiv(); gotoView('search'); });
 
 
     // --------------
