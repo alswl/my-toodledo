@@ -4,9 +4,7 @@
 // @version      0.1
 // @description  upgrade toodledo
 // @author       You
-// @match        http://www.duitang.com/*
 // @match        https://www.toodledo.com/tasks/*
-// @match        https://www.baidu.com/*
 // @require      https://dn-staticfile.qbox.me/underscore.js/1.7.0/underscore-min.js
 // @require      https://dn-staticfile.qbox.me/jquery/1.11.1/jquery.min.js
 // @require      https://dn-staticfile.qbox.me/mousetrap/1.4.6/mousetrap.min.js
@@ -23,13 +21,14 @@ var SHORTCUT_FOCUS_FIELD = {
     'r': 'rep',
     'l': 'len',
     'i': 'tim', 
-    'p': 'pri', 
-    'd': 'due'
+    'd': 'due',
+    'p': 'par',
+    'o': 'pri' 
 };
 var SHORTCUT_FOCUS_DROPDOWN_FIELD = {
     'f': {name: 'fol', 'select': 'lof'},
     'c': {name: 'con', 'select': 'noc'},
-    's': {name: 'sta', 'select': 'tas'}
+    's': {name: 'sat', 'select': 'tas'}
 };
 
 function highlightRow($row) {
