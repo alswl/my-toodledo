@@ -40,8 +40,9 @@ function unhighlightRow($row) {
 
 function triggerMouseEvent (node, eventType) {
     var clickEvent = document.createEvent ('MouseEvents');
-    clickEvent.initEvent (eventType, true, true);
-    node.dispatchEvent (clickEvent);
+    clickEvent.initEvent(eventType, false, true);
+    node.dispatchEvent(clickEvent);
+    return false;
 }
 
 function initSelectedTaskDiv() {
@@ -94,12 +95,9 @@ function moveUp() {
     }
     unhighlightRow(lastTask);
     highlightRow(_$selectedTask);
-    if (!_$selectedTask.is(':visible')) {
-        //$j('#tasks').animate({ scrollTop: $j('#tasks').scrollTop() + 20 }, 500);
-        //_$selectedTask.mouse
-        var e = jQuery.Event("keydown");
-        e.keyCode = 38;
-        _$selectedTask.trigger(e);
+    //debugger
+    if (_$selectedTask.position().top < $j('#tasks').position().top) {
+        $j('#tasks').animate({ scrollTop: $j('#tasks').scrollTop() - $j('#tasks').height() / 3 }, 100);
     }
 }
 
@@ -146,20 +144,11 @@ function moveDown() {
     } else if (nextLevel1Row.length) { // next row
         _$selectedTask = nextLevel1Row;
     } 
-    //if (lastTask.find('.subtasks').length) {
-        //_$selectedTask = lastTask.find('.subtasks .row').first();
-    //} else if (!lastTask.next('.row').length && lastTask.parents('.subtasks').length) {
-        //_$selectedTask = lastTask.parents('.row').next('.row');
-    //} else {
-        //_$selectedTask = lastTask.next('.row');
-    //}
     unhighlightRow(lastTask);
     highlightRow(_$selectedTask);
-    if (!_$selectedTask.is(':visible')) {
-        //$j('#tasks').animate({ scrollTop: $j('#tasks').scrollTop() - 20 }, 500);
-        var e = jQuery.Event("keydown");
-        e.keyCode = 40;
-        _$selectedTask.trigger(e);
+    //debugger
+    if (_$selectedTask.position().top + _$selectedTask.height() - $j('#tasks').position().top >  $j('#tasks').height()) {
+        $j('#tasks').animate({ scrollTop: $j('#tasks').scrollTop() + $j('#tasks').height() / 3 }, 100);
     }
 }
 
@@ -170,6 +159,7 @@ function doneOrUndone() {
     var btn2 = $j(task).find('.chd > img');
     btn1.click();
     btn2.click();
+    return false;
 }
 
 function gotoView(byWhat) {
@@ -191,7 +181,7 @@ function initTaskAction() {
 
     $j.each(SHORTCUT_FOCUS_DROPDOWN_FIELD, function(shortcut, option) {
         Mousetrap.bind(shortcut, function() {
-            debugger
+            //debugger
             var $row = _$selectedTask;
             var id = $row.attr('id').replace('row', '');
             $row.find('#' + option.name + id).click();
@@ -204,6 +194,7 @@ function initTaskAction() {
         var $row = _$selectedTask;
         var id = $row.attr('id').replace('row', '');
         $j('#tig' + id).click();
+            return false;
     });
     Mousetrap.bind('x', function() { doneOrUndone(); });
 }
