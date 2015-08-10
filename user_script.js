@@ -191,6 +191,7 @@ function initTaskAction() {
 
     $j.each(SHORTCUT_FOCUS_DROPDOWN_FIELD, function(shortcut, option) {
         Mousetrap.bind(shortcut, function() {
+            debugger
             var $row = _$selectedTask;
             var id = $row.attr('id').replace('row', '');
             $row.find('#' + option.name + id).click();
@@ -213,7 +214,7 @@ function initClickTask() {
         unhighlightRow(_$selectedTask);
         _$selectedTask = $j(this);
         highlightRow(_$selectedTask);
-        return false;
+        //return false;
     });
 }
 
