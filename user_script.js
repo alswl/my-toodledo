@@ -31,11 +31,11 @@ var SHORTCUT_FOCUS_DROPDOWN_FIELD = {
 };
 
 function highlightRow($row) {
-    $row.css({'background-color': '#e6e6e6'});
+    $row.css({'border-left': '3px solid #4d90f0'});
 }
 
 function unhighlightRow($row) {
-    $row.css({'background-color': ''});
+    $row.css({'border-left': ''});
 }
 
 function triggerMouseEvent (node, eventType) {
@@ -95,7 +95,11 @@ function moveUp() {
     unhighlightRow(lastTask);
     highlightRow(_$selectedTask);
     if (!_$selectedTask.is(':visible')) {
-        $j('#tasks').animate({ scrollTop: $j('#tasks').scrollTop() + 20 }, 500);
+        //$j('#tasks').animate({ scrollTop: $j('#tasks').scrollTop() + 20 }, 500);
+        //_$selectedTask.mouse
+        var e = jQuery.Event("keydown");
+        e.keyCode = 38;
+        _$selectedTask.trigger(e);
     }
 }
 
@@ -152,7 +156,10 @@ function moveDown() {
     unhighlightRow(lastTask);
     highlightRow(_$selectedTask);
     if (!_$selectedTask.is(':visible')) {
-        $j('#tasks').animate({ scrollTop: $j('#tasks').scrollTop() - 20 }, 500);
+        //$j('#tasks').animate({ scrollTop: $j('#tasks').scrollTop() - 20 }, 500);
+        var e = jQuery.Event("keydown");
+        e.keyCode = 40;
+        _$selectedTask.trigger(e);
     }
 }
 
@@ -200,9 +207,20 @@ function initTaskAction() {
     Mousetrap.bind('x', function() { doneOrUndone(); });
 }
 
+function initClickTask() {
+    $j(document).on('click', '.row', function() {
+        initSelectedTaskDiv();
+        unhighlightRow(_$selectedTask);
+        _$selectedTask = $j(this);
+        highlightRow(_$selectedTask);
+        return false;
+    });
+}
 
 
 $j(document).ready(function() {
+
+    initClickTask();
 
     Mousetrap.bind('0', function() {
         initSelectedTaskDiv();
