@@ -14,7 +14,6 @@
 var $j = window.jQuery.noConflict();
 
 var _$selectedTask;
-
 var SHORTCUT_FOCUS_FIELD = {
     'n': 'addnote',
     't': 'tsk',
@@ -145,28 +144,30 @@ function gotoView(byWhat) {
 
 function initTaskAction() {
     $j.each(SHORTCUT_FOCUS_FIELD, function(shortcut, field) {
-        Mousetrap.bind('ctrl+' + shortcut, function() {
+        Mousetrap.bind(shortcut, function() {
             var $row = _$selectedTask;
             var id = $row.attr('id').replace('row', '');
             $row.find('#' + field + id).click();
+            return false;
         });
     });
 
     $j.each(SHORTCUT_FOCUS_DROPDOWN_FIELD, function(shortcut, option) {
-        Mousetrap.bind('ctrl+' + shortcut, function() {
+        Mousetrap.bind(shortcut, function() {
             var $row = _$selectedTask;
             var id = $row.attr('id').replace('row', '');
             $row.find('#' + option.name + id).click();
             triggerMouseEvent($row.find('#' + option.select + id)[0], 'mousedown');   
+            return false;
         });
     });
 
-    Mousetrap.bind('s', function() {
+    Mousetrap.bind('enter', function() {
         var $row = _$selectedTask;
         var id = $row.attr('id').replace('row', '');
         $j('#tig' + id).click();
     });
-
+    Mousetrap.bind('x', function() { doneOrUndone(); });
 }
 
 
@@ -184,9 +185,8 @@ $j(document).ready(function() {
 
     // action
     initTaskAction();
-    Mousetrap.bind('x', function() { doneOrUndone(); });
-    Mousetrap.bind('f', function() { dropdownFolder($j(_$selectedTask)); });
-    Mousetrap.bind('c', function() { dropdownContext($j(_$selectedTask)); });
+    //Mousetrap.bind('f', function() { dropdownFolder($j(_$selectedTask)); });
+    //Mousetrap.bind('c', function() { dropdownContext($j(_$selectedTask)); });
 
     // navigate
     Mousetrap.bind('g c', function() { initSelectedTaskDiv(); gotoView('context'); });
@@ -198,7 +198,7 @@ $j(document).ready(function() {
     // --------------
 
     Mousetrap.bind("?", function() { console.log('show shortcuts!'); });
-    Mousetrap.bind('esc', function() { console.log('escape'); }, 'keyup');
+    //Mousetrap.bind('esc', function() { console.log('escape'); }, 'keyup');
 
     // combinations
     Mousetrap.bind('command+shift+k', function() { console.log('command shift k'); });
