@@ -52,6 +52,21 @@ function initSelectedTaskDiv() {
     return _$selectedTask;
 }
 
+function getRowPrev($row) {
+    if ($row.prev('.sep').prev('.row').length) {
+        return $row.prev('.sep').prev('.row');
+    }
+    if ($row.prev('.sep').prev('.sep').prev('.row').length) {
+        return $row.prev('.sep').prev('.sep').prev('.row');
+    }
+    if ($row.prev('.sep').prev('.sep').prev('.sep').prev('.row').length) {
+        return $row.prev('.sep').prev('.sep').prev('.sep').prev('.row');
+    }
+    if ($row.prev('.sep').prev('.sep').prev('.sep').prev('.sep').prev('.row').length) {
+        return $row.prev('.sep').prev('.sep').prev('.sep').prev('.sep').prev('.row');
+    }
+}
+
 function moveUp() {
     var lastTask = _$selectedTask;
     var prevLevel1Row = _$selectedTask;
@@ -61,7 +76,7 @@ function moveUp() {
     } else {
         prevLevel1Row = lastTask.prev('.row');
         if (!prevLevel1Row.length) {
-            prevLevel1Row = lastTask.prev('.sep').prev('.row');
+            prevLevel1Row = getRowPrev(lastTask);
         }
     }
     if (lastTask.parents('.subtasks').length) {  // in sub list
@@ -84,6 +99,21 @@ function moveUp() {
     }
 }
 
+function getRowNext($row) {
+    if ($row.next('.sep').next('.row').length) {
+        return $row.next('.sep').next('.row');
+    }
+    if ($row.next('.sep').next('.sep').next('.row').length) {
+        return $row.next('.sep').next('.sep').next('.row');
+    }
+    if ($row.next('.sep').next('.sep').next('.sep').next('.row').length) {
+        return $row.next('.sep').next('.sep').next('.sep').next('.row');
+    }
+    if ($row.next('.sep').next('.sep').next('.sep').next('.sep').next('.row').length) {
+        return $row.next('.sep').next('.sep').next('.sep').next('.sep').next('.row');
+    }
+}
+
 function moveDown() {
     var lastTask = _$selectedTask;
     var nextLevel1Row = _$selectedTask;
@@ -91,12 +121,12 @@ function moveDown() {
     if (lastTask.parents('.subtasks').length) {
         nextLevel1Row = lastTask.parents('.row').next('.row');
         if (!nextLevel1Row.length) {
-            nextLevel1Row = lastTask.parents('.row').next('.sep').next('.row');
+            nextLevel1Row = getRowNext(lastTask.parents('.row'));
         }
     } else {
         nextLevel1Row = lastTask.next('.row');
         if (!nextLevel1Row.length) {
-            nextLevel1Row = lastTask.next('.sep').next('.row');
+            nextLevel1Row = getRowNext(lastTask);
         }
     }
     if (lastTask.parents('.subtasks').length) { // in sub list
