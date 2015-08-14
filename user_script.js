@@ -39,7 +39,7 @@ function unhighlightRow($row) {
 }
 
 function triggerMouseEvent (node, eventType) {
-    var clickEvent = document.createEvent ('MouseEvents');
+    var clickEvent = document.createEvent('MouseEvents');
     clickEvent.initEvent(eventType, false, true);
     node.dispatchEvent(clickEvent);
     return false;
@@ -194,18 +194,18 @@ function initTaskAction() {
         var $row = _$selectedTask;
         var id = $row.attr('id').replace('row', '');
         $j('#tig' + id).click();
-            return false;
+        return false;
     });
     Mousetrap.bind('x', function() { doneOrUndone(); });
 }
 
 function initClickTask() {
-    $j(document).on('click', '.row', function() {
+    $j(document).on('click', '.row', function(e) {
         initSelectedTaskDiv();
         unhighlightRow(_$selectedTask);
         _$selectedTask = $j(this);
         highlightRow(_$selectedTask);
-        //return false;
+        e.stopPropagation();
     });
 }
 
