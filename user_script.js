@@ -167,7 +167,7 @@ function doneOrUndone() {
 
 function gotoView(byWhat) {
     //debugger
-    $j('.viewby[href="#' + byWhat + '"]').each(function(idx, elem) {
+    $j('.viewby[hash="' + byWhat + '"]').each(function(idx, elem) {
         elem.click();
     });
 }
