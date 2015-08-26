@@ -236,6 +236,9 @@ $j(document).ready(function() {
     Mousetrap.bind('g f', function() { initSelectedTaskDiv(); gotoView('folder'); });
     Mousetrap.bind('g m', function() { initSelectedTaskDiv(); gotoView('Main'); });
     Mousetrap.bind('g s', function() { initSelectedTaskDiv(); gotoView('search'); });
+    Mousetrap.bind('0', function() {
+        $j('#js_sb_toggle').click();
+    });
 
 
     // --------------
