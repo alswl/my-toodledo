@@ -155,8 +155,11 @@ function moveDown() {
 function doneOrUndone() {
     var task = _$selectedTask;
     //debugger
-    var btn1 = $j(task).find('.ch > img');
-    var btn2 = $j(task).find('.chd > img');
+    var btn1 = $j(task).find('.ch > img').eq(0);
+    var btn2 = $j(task).find('.chd > img').eq(0);
+    //if (btn1.parents('.subtasks').length || btn2.parents('.subtasks').length) {
+        //return false;
+    //}
     btn1.click();
     btn2.click();
     return false;
