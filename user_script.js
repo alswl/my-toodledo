@@ -22,12 +22,13 @@ var SHORTCUT_FOCUS_FIELD = {
     'i': 'tim', 
     'd': 'due',
     'p': 'par',
-    'o': 'pri' 
+    'o': 'pri'
 };
 var SHORTCUT_FOCUS_DROPDOWN_FIELD = {
     'f': {name: 'fol', 'select': 'lof'},
     'c': {name: 'con', 'select': 'noc'},
-    's': {name: 'sat', 'select': 'tas'}
+    's': {name: 'sat', 'select': 'tas'},
+    'a': {name: 'gol', 'select': 'log'}
 };
 
 function highlightRow($row) {
