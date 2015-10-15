@@ -54,19 +54,17 @@ function initSelectedTaskDiv() {
     return _$selectedTask;
 }
 
-function getRowPrev($row) {
-    if ($row.prev('.sep').prev('.row').length) {
-        return $row.prev('.sep').prev('.row');
+function getRowPrev($row, limit) {
+    if ($row.prev('.row').length) {
+        return $row.prev('.row');
     }
-    if ($row.prev('.sep').prev('.sep').prev('.row').length) {
-        return $row.prev('.sep').prev('.sep').prev('.row');
+    if ($row.prev('.sep').length) {
+        return getRowPrev($row.prev('.sep'), limit - 1);
     }
-    if ($row.prev('.sep').prev('.sep').prev('.sep').prev('.row').length) {
-        return $row.prev('.sep').prev('.sep').prev('.sep').prev('.row');
+    if ($row.prev('style').length) {
+        return getRowPrev($row.prev('style'), limit - 1);
     }
-    if ($row.prev('.sep').prev('.sep').prev('.sep').prev('.sep').prev('.row').length) {
-        return $row.prev('.sep').prev('.sep').prev('.sep').prev('.sep').prev('.row');
-    }
+    return [];
 }
 
 function moveUp() {
@@ -78,7 +76,7 @@ function moveUp() {
     } else {
         prevLevel1Row = lastTask.prev('.row');
         if (!prevLevel1Row.length) {
-            prevLevel1Row = getRowPrev(lastTask);
+            prevLevel1Row = getRowPrev(lastTask, 10);
         }
     }
     if (lastTask.parents('.subtasks').length) {  // in sub list
@@ -102,19 +100,17 @@ function moveUp() {
     }
 }
 
-function getRowNext($row) {
-    if ($row.next('.sep').next('.row').length) {
-        return $row.next('.sep').next('.row');
+function getRowNext($row, limit) {
+    if ($row.next('.row').length) {
+        return $row.next('.row');
     }
-    if ($row.next('.sep').next('.sep').next('.row').length) {
-        return $row.next('.sep').next('.sep').next('.row');
+    if ($row.next('.sep').length) {
+        return getRowNext($row.next('.sep'), limit - 1);
     }
-    if ($row.next('.sep').next('.sep').next('.sep').next('.row').length) {
-        return $row.next('.sep').next('.sep').next('.sep').next('.row');
+    if ($row.next('style').length) {
+        return getRowNext($row.next('style'), limit - 1);
     }
-    if ($row.next('.sep').next('.sep').next('.sep').next('.sep').next('.row').length) {
-        return $row.next('.sep').next('.sep').next('.sep').next('.sep').next('.row');
-    }
+    return [];
 }
 
 function moveDown() {
@@ -124,12 +120,12 @@ function moveDown() {
     if (lastTask.parents('.subtasks').length) {
         nextLevel1Row = lastTask.parents('.row').next('.row');
         if (!nextLevel1Row.length) {
-            nextLevel1Row = getRowNext(lastTask.parents('.row'));
+            nextLevel1Row = getRowNext(lastTask.parents('.row'), 10);
         }
     } else {
         nextLevel1Row = lastTask.next('.row');
         if (!nextLevel1Row.length) {
-            nextLevel1Row = getRowNext(lastTask);
+            nextLevel1Row = getRowNext(lastTask, 10);
         }
     }
     if (lastTask.parents('.subtasks').length) { // in sub list
