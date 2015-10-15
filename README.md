@@ -16,3 +16,6 @@ Feature:
         * **l**ength
         * enter = timer start/pause
         * x = done/undo
+
+
+Works well for Chrome and Safari.
