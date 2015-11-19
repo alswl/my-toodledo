@@ -24,6 +24,11 @@ var SHORTCUT_FOCUS_FIELD = {
     'p': 'par',
     'o': 'pri'
 };
+var SHORTCUT_ACTION_FIELD = {
+    'S': addSubtask,
+    'D': duplicateTask,
+    'X': function(id) {deleteTask(null, id);}
+}
 var SHORTCUT_FOCUS_DROPDOWN_FIELD = {
     'f': {name: 'fol', 'select': 'lof'},
     'c': {name: 'con', 'select': 'noc'},
@@ -175,6 +180,14 @@ function initTaskAction() {
             var $row = _$selectedTask;
             var id = $row.attr('id').replace('row', '');
             $row.find('#' + field + id).click();
+            return false;
+        });
+    });
+    $j.each(SHORTCUT_ACTION_FIELD, function(shortcut, actionFun) {
+        Mousetrap.bind(shortcut, function() {
+            var $row = _$selectedTask;
+            var id = $row.attr('id').replace('row', '');
+            actionFun(id);
             return false;
         });
     });
