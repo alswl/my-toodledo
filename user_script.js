@@ -44,7 +44,7 @@ function unhighlightRow($row) {
     $row.css({'border-left': ''});
 }
 
-function triggerMouseEvent (node, eventType) {
+function triggerMouseEvent(node, eventType) {  // for dorpdown mouse click
     var clickEvent = document.createEvent('MouseEvents');
     clickEvent.initEvent(eventType, false, true);
     node.dispatchEvent(clickEvent);
@@ -177,9 +177,13 @@ function gotoView(byWhat) {
 function initTaskAction() {
     $j.each(SHORTCUT_FOCUS_FIELD, function(shortcut, field) {
         Mousetrap.bind(shortcut, function() {
+            //debugger;
             var $row = _$selectedTask;
             var id = $row.attr('id').replace('row', '');
-            $row.find('#' + field + id).click();
+            var input = _.first($row.find('#' + field + id))
+            if (input !== null) {
+                input.click();
+            }
             return false;
         });
     });
@@ -194,7 +198,6 @@ function initTaskAction() {
 
     $j.each(SHORTCUT_FOCUS_DROPDOWN_FIELD, function(shortcut, option) {
         Mousetrap.bind(shortcut, function() {
-            //debugger
             var $row = _$selectedTask;
             var id = $row.attr('id').replace('row', '');
             $row.find('#' + option.name + id).click();
