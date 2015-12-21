@@ -252,6 +252,9 @@ $j(document).ready(function() {
     Mousetrap.bind('0', function() {
         $j('#js_sb_toggle').click();
     });
+    Mousetrap.bind('shift+n', function() {
+        $j('#quickAdd').focus();
+    });
 
 
     // --------------
