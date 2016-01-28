@@ -256,6 +256,28 @@ $j(document).ready(function() {
         $j('#quickAdd').focus();
     });
 
+    // View - subtask
+    Mousetrap.bind('v i', function() {
+        $j('#action_showFilter').click();
+        $j('#subf0').click();
+        //$j('#filterPop').attr('changed', '1');
+        //$j('#filterPop').blur();
+        $j('#action_showFilter').click();
+    });
+    Mousetrap.bind('v h', function() {
+        $j('#action_showFilter').click();
+        $j('#subf1').click();
+        //$j('#filterPop').attr('changed', '1');
+        //$j('#filterPop').blur();
+        $j('#action_showFilter').click();
+    });
+    Mousetrap.bind('v d', function() {
+        $j('#action_showFilter').click();
+        $j('#subf2').click();
+        //$j('#filterPop').attr('changed', '1');
+        //$j('#filterPop').blur();
+        $j('#action_showFilter').click();
+    });
 
     // --------------
 
