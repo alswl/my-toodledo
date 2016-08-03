@@ -257,7 +257,7 @@ $j(document).ready(function() {
     });
 
     // View - subtask
-    Mousetrap.bind('v i', function() {
+    Mousetrap.bind('v l', function() {
         $j('#action_showFilter').click();
         $j('#subf0').click();
         //$j('#filterPop').attr('changed', '1');
