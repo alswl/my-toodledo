@@ -20,6 +20,10 @@ add Gmail like shortcut:
     *   D = **d**uplicate
     *   X = delete
     *   S = add **s**ub task
+*   View:
+    *   vl = subtasks view inline
+    *   vd = subtasks view indented
+    *   vh = subtasks view hidden 
 
 
 Works well for Chrome and Safari.
