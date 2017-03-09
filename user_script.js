@@ -35,33 +35,52 @@ var SHORTCUT_FOCUS_DROPDOWN_FIELD = {
     's': {name: 'sat', 'select': 'tas'},
     'a': {name: 'gol', 'select': 'log'}
 };
+var SELECTOR_ROW = '.row';
+var SELECTOR_SUBTASKS = '.subtasks';
+var SELECTOR_TIMER_PREFIX = '#tig';
+var STYLE_HIGHLIGHT_ROW = '3px solid #4d90f0';
+var SELECTOR_TASKS = '#tasks';
+var SELECTOR_COLLPSE = '#js_sb_toggle';
+var SELECTOR_ADD_BTN = '#quickAdd';
+var SELECTOR_SHOW_FILTER_BTN = '#action_showFilter';
+var SELECTOR_SUBTASK_INLINE_BTN = '#subf0';
+var SELECTOR_SUBTASK_HIDDEN = '#subf1';
+var SELECTOR_SUBTASK_INDENDED = '#subf2';
+
 
 function highlightRow($row) {
-    $row.css({'border-left': '3px solid #4d90f0'});
+    $row.css({'border-left': STYLE_HIGHLIGHT_ROW});
 }
 
 function unhighlightRow($row) {
     $row.css({'border-left': ''});
 }
 
-function triggerMouseEvent(node, eventType) {  // for dorpdown mouse click
+/**
+ * for dorpdown mouse click
+ */
+function triggerMouseEvent(node, eventType) {
     var clickEvent = document.createEvent('MouseEvents');
     clickEvent.initEvent(eventType, false, true);
     node.dispatchEvent(clickEvent);
     return false;
 }
 
+/**
+ * focus current task
+ * @returns {*}
+ */
 function initSelectedTaskDiv() {
     if (_$selectedTask === undefined || !_$selectedTask.is(':visible')) {
-        _$selectedTask = $j('.row').eq(0);
+        _$selectedTask = $j(SELECTOR_ROW).eq(0);
     }
     highlightRow(_$selectedTask);
     return _$selectedTask;
 }
 
 function getRowPrev($row, limit) {
-    if ($row.prev('.row').length) {
-        return $row.prev('.row');
+    if ($row.prev(SELECTOR_ROW).length) {
+        return $row.prev(SELECTOR_ROW);
     }
     if ($row.prev('.sep').length) {
         return getRowPrev($row.prev('.sep'), limit - 1);
@@ -76,23 +95,23 @@ function moveUp() {
     var lastTask = _$selectedTask;
     var prevLevel1Row = _$selectedTask;
     //debugger
-    if (lastTask.parents('.subtasks').length) {
-        prevLevel1Row = lastTask.parents('.row');
+    if (lastTask.parents(SELECTOR_SUBTASKS).length) {
+        prevLevel1Row = lastTask.parents(SELECTOR_ROW);
     } else {
-        prevLevel1Row = lastTask.prev('.row');
+        prevLevel1Row = lastTask.prev(SELECTOR_ROW);
         if (!prevLevel1Row.length) {
             prevLevel1Row = getRowPrev(lastTask, 10);
         }
     }
-    if (lastTask.parents('.subtasks').length) {  // in sub list
-        if (lastTask.prev('.row').length) {
-            _$selectedTask = lastTask.prev('.row');
+    if (lastTask.parents(SELECTOR_SUBTASKS).length) {  // in sub list
+        if (lastTask.prev(SELECTOR_ROW).length) {
+            _$selectedTask = lastTask.prev(SELECTOR_ROW);
         } else if (prevLevel1Row.length){
             _$selectedTask = prevLevel1Row;
         }
     } else if (prevLevel1Row.length) { // prev row
-        if (prevLevel1Row.find('.subtasks .row').length) { // focus prev row last
-            _$selectedTask = prevLevel1Row.find('.subtasks .row').last();
+        if (prevLevel1Row.find(SELECTOR_SUBTASKS + '' + SELECTOR_ROW).length) { // focus prev row last
+            _$selectedTask = prevLevel1Row.find(SELECTOR_SUBTASKS + ' ' + SELECTOR_ROW).last();
         } else {
             _$selectedTask = prevLevel1Row;
         }
@@ -100,14 +119,14 @@ function moveUp() {
     unhighlightRow(lastTask);
     highlightRow(_$selectedTask);
     //debugger
-    if (_$selectedTask.position().top < $j('#tasks').position().top) {
-        $j('#tasks').animate({ scrollTop: $j('#tasks').scrollTop() - $j('#tasks').height() / 3 }, 100);
+  if (_$selectedTask.position().top < $j(SELECTOR_TASKS).position().top) {
+        $j(SELECTOR_TASKS).animate({ scrollTop: $j(SELECTOR_TASKS).scrollTop() - $j(SELECTOR_TASKS).height() / 3 }, 100);
     }
 }
 
 function getRowNext($row, limit) {
-    if ($row.next('.row').length) {
-        return $row.next('.row');
+    if ($row.next(SELECTOR_ROW).length) {
+        return $row.next(SELECTOR_ROW);
     }
     if ($row.next('.sep').length) {
         return getRowNext($row.next('.sep'), limit - 1);
@@ -122,35 +141,35 @@ function moveDown() {
     var lastTask = _$selectedTask;
     var nextLevel1Row = _$selectedTask;
     //debugger
-    if (lastTask.parents('.subtasks').length) {
-        nextLevel1Row = lastTask.parents('.row').next('.row');
+    if (lastTask.parents(SELECTOR_SUBTASKS).length) {
+        nextLevel1Row = lastTask.parents(SELECTOR_ROW).next(SELECTOR_ROW);
         if (!nextLevel1Row.length) {
-            nextLevel1Row = getRowNext(lastTask.parents('.row'), 10);
+            nextLevel1Row = getRowNext(lastTask.parents(SELECTOR_ROW), 10);
         }
     } else {
-        nextLevel1Row = lastTask.next('.row');
+        nextLevel1Row = lastTask.next(SELECTOR_ROW);
         if (!nextLevel1Row.length) {
             nextLevel1Row = getRowNext(lastTask, 10);
         }
     }
-    if (lastTask.parents('.subtasks').length) { // in sub list
-        if (lastTask.next('.row').length) {
-            _$selectedTask = lastTask.next('.row');
+    if (lastTask.parents(SELECTOR_SUBTASKS).length) { // in sub list
+        if (lastTask.next(SELECTOR_ROW).length) {
+            _$selectedTask = lastTask.next(SELECTOR_ROW);
         } else {
             if (nextLevel1Row.length) {
                 _$selectedTask = nextLevel1Row;
             }
         }
-    } else if (lastTask.find('.subtasks .row').length) { // go into sub list
-        _$selectedTask = lastTask.find('.subtasks .row').first();
+    } else if (lastTask.find(SELECTOR_SUBTASKS + ' ' + SELECTOR_ROW).length) { // go into sub list
+        _$selectedTask = lastTask.find(SELECTOR_SUBTASKS + ' ' + SELECTOR_ROW).first();
     } else if (nextLevel1Row.length) { // next row
         _$selectedTask = nextLevel1Row;
     } 
     unhighlightRow(lastTask);
     highlightRow(_$selectedTask);
     //debugger
-    if (_$selectedTask.position().top + _$selectedTask.height() - $j('#tasks').position().top >  $j('#tasks').height()) {
-        $j('#tasks').animate({ scrollTop: $j('#tasks').scrollTop() + $j('#tasks').height() / 3 }, 100);
+    if (_$selectedTask.position().top + _$selectedTask.height() - $j(SELECTOR_TASKS).position().top >  $j(SELECTOR_TASKS).height()) {
+        $j(SELECTOR_TASKS).animate({ scrollTop: $j(SELECTOR_TASKS).scrollTop() + $j(SELECTOR_TASKS).height() / 3 }, 100);
     }
 }
 
@@ -159,7 +178,7 @@ function doneOrUndone() {
     //debugger
     var btn1 = $j(task).find('.ch .tsk').eq(0);
     var btn2 = $j(task).find('.chd .tsk').eq(0);
-    //if (btn1.parents('.subtasks').length || btn2.parents('.subtasks').length) {
+    //if (btn1.parents(SELECTOR_SUBTASKS).length || btn2.parents(SELECTOR_SUBTASKS).length) {
         //return false;
     //}
     btn1.click();
@@ -174,7 +193,7 @@ function gotoView(byWhat) {
     });
 }
 
-function initTaskAction() {
+function bindTaskActionHandler() {
     $j.each(SHORTCUT_FOCUS_FIELD, function(shortcut, field) {
         Mousetrap.bind(shortcut, function() {
             //debugger;
@@ -209,14 +228,14 @@ function initTaskAction() {
     Mousetrap.bind('enter', function() {
         var $row = _$selectedTask;
         var id = $row.attr('id').replace('row', '');
-        $j('#tig' + id).click();
+      $j(SELECTOR_TIMER_PREFIX + id).click();
         return false;
     });
     Mousetrap.bind('x', function() { doneOrUndone(); });
 }
 
-function initClickTask() {
-    $j(document).on('click', '.row', function(e) {
+function bindTaskClickHandler() {
+    $j(document).on('click', SELECTOR_ROW, function(e) {
         initSelectedTaskDiv();
         unhighlightRow(_$selectedTask);
         _$selectedTask = $j(this);
@@ -227,20 +246,14 @@ function initClickTask() {
 
 
 $j(document).ready(function() {
-
-    initClickTask();
-
-    Mousetrap.bind('0', function() {
-        initSelectedTaskDiv();
-        console.log(_$selectedTask);
-    });
+    bindTaskClickHandler();
+    bindTaskActionHandler();
 
     // move
     Mousetrap.bind('k', function() { initSelectedTaskDiv(); moveUp(); });
     Mousetrap.bind('j', function() { initSelectedTaskDiv(); moveDown(); });
 
     // action
-    initTaskAction();
     //Mousetrap.bind('f', function() { dropdownFolder($j(_$selectedTask)); });
     //Mousetrap.bind('c', function() { dropdownContext($j(_$selectedTask)); });
 
@@ -250,59 +263,33 @@ $j(document).ready(function() {
     Mousetrap.bind('g m', function() { initSelectedTaskDiv(); gotoView('Main'); });
     Mousetrap.bind('g s', function() { initSelectedTaskDiv(); gotoView('search'); });
     Mousetrap.bind('0', function() {
-        $j('#js_sb_toggle').click();
+        $j(SELECTOR_COLLPSE).click();
     });
     Mousetrap.bind('shift+n', function() {
-        $j('#quickAdd').focus();
+        $j(SELECTOR_ADD_BTN).focus();
     });
 
     // View - subtask
     Mousetrap.bind('v l', function() {
-        $j('#action_showFilter').click();
-        $j('#subf0').click();
+        $j(SELECTOR_SHOW_FILTER_BTN).click();
+        $j(SELECTOR_SUBTASK_INLINE_BTN).click();
         //$j('#filterPop').attr('changed', '1');
         //$j('#filterPop').blur();
-        $j('#action_showFilter').click();
+        $j(SELECTOR_SHOW_FILTER_BTN).click();
     });
     Mousetrap.bind('v h', function() {
-        $j('#action_showFilter').click();
-        $j('#subf1').click();
+        $j(SELECTOR_SHOW_FILTER_BTN).click();
+        $j(SELECTOR_SUBTASK_HIDDEN).click();
         //$j('#filterPop').attr('changed', '1');
         //$j('#filterPop').blur();
-        $j('#action_showFilter').click();
+        $j(SELECTOR_SHOW_FILTER_BTN).click();
     });
     Mousetrap.bind('v d', function() {
-        $j('#action_showFilter').click();
-        $j('#subf2').click();
+        $j(SELECTOR_SHOW_FILTER_BTN).click();
+        $j(SELECTOR_SUBTASK_INDENDED).click();
         //$j('#filterPop').attr('changed', '1');
         //$j('#filterPop').blur();
-        $j('#action_showFilter').click();
-    });
-
-    // --------------
-
-    Mousetrap.bind("?", function() { console.log('show shortcuts!'); });
-    //Mousetrap.bind('esc', function() { console.log('escape'); }, 'keyup');
-
-    // combinations
-    Mousetrap.bind('command+shift+k', function() { console.log('command shift k'); });
-
-    // map multiple combinations to the same callback
-    Mousetrap.bind(['command+k', 'ctrl+k'], function() {
-        console.log('command k or control k');
-
-        // return false to prevent default browser behavior
-        // and stop event from bubbling
-        return false;
-    });
-
-    // gmail style sequences
-    Mousetrap.bind('g i', function() { console.log('go to inbox'); });
-    Mousetrap.bind('* a', function() { console.log('select all'); });
-
-    // konami code!
-    Mousetrap.bind('up up down down left right left right b a enter', function() {
-        console.log('konami code');
+        $j(SELECTOR_SHOW_FILTER_BTN).click();
     });
 });
 
