@@ -2,7 +2,7 @@
 // ==UserScript==
 // @name         My Toodledo
 // @namespace    http://log4d.com/
-// @version      160803.1158
+// @version      170810.1634
 // @description  upgrade toodledo
 // @author       You
 // @match        https://www.toodledo.com/tasks/*
@@ -16,7 +16,8 @@ var $j = window.jQuery.noConflict();
 
 var _$selectedTask;
 var SHORTCUT_FOCUS_FIELD = {
-  'n': 'addnote',
+  'n': 'noteic',
+  'N': 'addnote',
   't': 'tsk',
   'r': 'rep',
   'l': 'len',
