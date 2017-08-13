@@ -16,8 +16,9 @@ var $j = window.jQuery.noConflict();
 
 var _$selectedTask;
 var SHORTCUT_FOCUS_FIELD = {
-  'n': 'noteic',
-  'N': 'addnote',
+  'n n': 'noteic',
+  'n a': 'addnote',
+  'n e': 'note',
   't': 'tsk',
   'r': 'rep',
   'l': 'len',
