@@ -1,14 +1,14 @@
 // vim: set ft=javascript expandtab sw=2:
 // ==UserScript==
 // @name         My Toodledo
-// @namespace    http://log4d.com/
-// @version      170810.1634
+// @namespace    https://alswl.com/
+// @version      201120.1155
 // @description  upgrade toodledo
-// @author       You
+// @author       alswl
 // @match        https://www.toodledo.com/tasks/*
-// @require      https://dn-staticfile.qbox.me/underscore.js/1.7.0/underscore-min.js
-// @require      https://dn-staticfile.qbox.me/jquery/1.11.1/jquery.min.js
-// @require      https://dn-staticfile.qbox.me/mousetrap/1.4.6/mousetrap.min.js
+// @require      https://dn-staticfile.qbox.me/underscore.js/1.9.1/underscore-min.js
+// @require      https://dn-staticfile.qbox.me/jquery/3.3.1/jquery.min.js
+// @require      https://dn-staticfile.qbox.me/mousetrap/1.6.3/mousetrap.min.js
 // @grant        GM_addStyle
 // ==/UserScript==
 
@@ -22,10 +22,11 @@ var SHORTCUT_FOCUS_FIELD = {
   't': 'tsk',
   'r': 'rep',
   'l': 'len',
-  'i': 'tim', 
+  'i': 'tim',
   'd': 'due',
   'p': 'par',
-  'o': 'pri'
+  'o': 'pri',
+  'm': 'star',
 };
 var SHORTCUT_ACTION_FIELD = {
   'S': addSubtask,
@@ -267,6 +268,7 @@ $j(document).ready(function() {
   Mousetrap.bind('g s', function() { initSelectedTaskDiv(); gotoView('search'); });
   Mousetrap.bind('0', function() {
     $j(SELECTOR_COLLPSE).click();
+    $j('#topnav-in').toogleClass('hide');
   });
   Mousetrap.bind('shift+n', function() {
     $j(SELECTOR_ADD_BTN).focus();
