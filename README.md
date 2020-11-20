@@ -15,6 +15,7 @@ add Gmail like shortcut:
     *   i = pr**i**ority
     *   i = t**i**mer
     *   l = **l**ength
+    *   m = **m**ark task stared
     *   enter = timer start/pause
     *   x = done/undo
     *   D = **d**uplicate
