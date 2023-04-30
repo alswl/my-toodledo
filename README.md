@@ -28,3 +28,11 @@ add Gmail like shortcut:
 
 
 Works well for Chrome and Safari.
+
+
+---
+
+I’ve used Toodledo for over twelve years now paying eight years’ subscription fees.
+Now I migrate to Obsidian Tasks. Read
+[From Toodledo To Obsidian Tasks - my GTD best practices | Log4D](https://en.blog.alswl.com/2023/02/gtd/)
+for more details.
